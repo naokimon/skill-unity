@@ -1,20 +1,25 @@
 using UnityEngine;
 
-public class SideToSide : MonoBehaviour
+public class CircularMovement : MonoBehaviour
 {
-    public float speed = 2f;       // Movement speed
-    public float distance = 3f;    // How far left/right to move
+    public float radius = 2f;    // Size of the circle
+    public float speed = 2f;     // Rotation speed
 
-    private float startX;
+    private Vector3 center;
+    private float angle;
 
     void Start()
     {
-        startX = transform.position.x;
+        center = transform.position;   // Circle center = the starting point
     }
 
     void Update()
     {
-        float x = startX + Mathf.PingPong(Time.time * speed, distance * 2) - distance;
-        transform.position = new Vector3(x, transform.position.y, transform.position.z);
+        angle += speed * Time.deltaTime;
+
+        float x = Mathf.Cos(angle) * radius;
+        float y = Mathf.Sin(angle) * radius;
+
+        transform.position = center + new Vector3(x, y, 0f);
     }
 }
